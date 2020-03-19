@@ -4,7 +4,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
-public class NewUser {
+public class User {
+
+    private String firstName;
+    private String lastName;
+    private int gender;
 
     String[] maleFirstName = {"Peter", "Mark", "John", "Stephen"};
     String[] maleLastName = {"Smith", "Johnson", "Williams", "Jones"};
@@ -16,43 +20,45 @@ public class NewUser {
 
     Random random = new Random();
 
-    final private int num = random.nextInt(maleFirstName.length);
-    final private boolean gender = femaleGender();
-
-    public NewUser() {
+    private int randomIndex() {
+        return random.nextInt(4);
     }
 
-    public boolean femaleGender() {
-        boolean gender = random.nextBoolean();
-        return gender;
-    }
+    public User() {
+        this.gender = random.nextInt(2);
+        this.firstName = createFirstName();
+        this.lastName = createLastName();
 
-    public int getGender() {
-        if (gender) {
-            return 1;
-        } else {
-            return 0;
-        }
     }
 
     public String createFirstName() {
-        String firstName;
-        if (gender) {
-            firstName = femaleFirstName[num];
+        if (gender == 0) {
+            this.firstName = maleFirstName[randomIndex()];
         } else {
-            firstName = maleFirstName[num];
+            this.firstName = femaleFirstName[randomIndex()];
         }
         return firstName;
     }
 
     public String createLastName() {
-        String lastName;
-        if (gender) {
-            lastName = femaleLastName[num];
+        if (gender == 0) {
+            this.lastName = maleLastName[randomIndex()];
         } else {
-            lastName = maleLastName[num];
+            this.lastName = femaleLastName[randomIndex()];
         }
         return lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public int getGender() {
+        return gender;
     }
 
     private int createRandomValue(int start, int end) {
@@ -62,7 +68,7 @@ public class NewUser {
     public String createDateOfBirth() {
         int day = createRandomValue(1, 28);
         int month = createRandomValue(1, 12);
-        int year = createRandomValue(1960, 2005);
+        int year = createRandomValue(1960, 2000);
         LocalDate date = LocalDate.of(year, month, day);
         String myDate = LocalDate.of(year, month, day).format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
         return myDate;
@@ -80,13 +86,13 @@ public class NewUser {
 
     public String createEmailAddress() {
         int number = random.nextInt(80);
-        return createFirstName().toLowerCase() + number + "@mail.com";
+        return this.firstName.toLowerCase() + number + "@mail.com";
     }
 
     public String userCompleteAddress(int fieldIndex) {
-        String address = userAddress[num];
-        String locality = userLocality[num];
-        String region = userRegion[num];
+        String address = userAddress[randomIndex()];
+        String locality = userLocality[randomIndex()];
+        String region = userRegion[randomIndex()];
         switch (fieldIndex) {
             case 0:
                 return address;
