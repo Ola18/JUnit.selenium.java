@@ -3,15 +3,14 @@ package pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
-import user.NewUser;
+import user.User;
 
 import java.util.List;
 
 public class FirstPage extends PageObject {
 
-    NewUser user = new NewUser();
+    User user = new User();
 
     public FirstPage(WebDriver driver) {
         super(driver);
@@ -57,17 +56,17 @@ public class FirstPage extends PageObject {
 
     public FirstPage selectUserTitle() {
         Select select = new Select(selectTitle);
-        if (user.getGender() == 1) {
-            select.selectByIndex(3);
-        } else {
+        if (user.getGender() == 0) {
             select.selectByIndex(1);
+        } else {
+            select.selectByIndex(3);
         }
         return this;
     }
 
     public FirstPage createNewUser() {
-        firstName.sendKeys(user.createFirstName());
-        lastName.sendKeys(user.createLastName());
+        firstName.sendKeys(user.getFirstName());
+        lastName.sendKeys(user.getLastName());
         genderRadio.get(user.getGender()).click();
         birthDate.sendKeys(user.createDateOfBirth());
         ssnNumber.sendKeys(user.createSSN());
