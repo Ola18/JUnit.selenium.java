@@ -75,7 +75,6 @@ public class User {
     }
 
     public String createSSN() {
-        Random random = new Random();
         String numberSSN = "";
         while (numberSSN.length() < 10) {
             int num = random.nextInt(9);
